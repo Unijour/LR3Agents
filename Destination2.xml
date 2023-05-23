@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ConfigPR>
+    <neighbour>
+        <neighbours name="Refueling2" weight="3.0"/>
+        <neighbours name="Refueling3" weight="4.0"/>
+    </neighbour>
+    <startpoint>false</startpoint>
+    <endpoint>true</endpoint>
+</ConfigPR>

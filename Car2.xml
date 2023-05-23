@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ConfigPR>
+    <neighbour>
+        <neighbours name="Refueling7" weight="1.0"/>
+    </neighbour>
+    <startpoint>true</startpoint>
+    <endpoint>false</endpoint>
+    <destination>Destination2</destination>
+    <battery>50.0</battery>
+</ConfigPR>
