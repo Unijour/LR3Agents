@@ -18,12 +18,12 @@ public class LastBehaviour extends WakerBehaviour {
     @Override
     protected void onWake() {
         System.out.println(ChoiceData.getChoicesList());
-        double[][] result = new double[11][ChoiceData.getChoicesList().size()];
+        double[][] result = new double[ChoiceData.getChoicesList().size()][12];
         System.out.println(result);
         int i = 0;
         for (Map.Entry<String, ArrayList<ArrayList<Double>>> entry: ChoiceData.getChoicesList().entrySet()) {
             for (int j = 0; j < entry.getValue().size(); j++) {
-                result[j][i] = entry.getValue().get(j).get(0);
+                result[i][j] = entry.getValue().get(j).get(0);
             }
             i = i+1;
         }

@@ -11,6 +11,12 @@ import jade.lang.acl.MessageTemplate;
 import java.util.ArrayList;
 
 public class BehaviourForLastAgent extends Behaviour {
+    Long currenttime;
+
+    public BehaviourForLastAgent(Long currenttime) {
+        this.currenttime = currenttime;
+    }
+
     @Override
     public void action() {
         AgentCfg cfg = XmlHelper.unMarshalAny(AgentCfg.class, getAgent().getLocalName()+".xml");
@@ -34,7 +40,6 @@ public class BehaviourForLastAgent extends Behaviour {
                     namesList.add(splitedReq[b]);
                 }
                 namesList.add(getAgent().getLocalName());
-                System.out.println("namesList for last to send inform is" + namesList);
                 ACLMessage firstInfoSend = new ACLMessage(ACLMessage.INFORM);
                 double spentMoney = 0.0;
                 if (splittedOne[4].equals("Electrical")) {
@@ -45,7 +50,7 @@ public class BehaviourForLastAgent extends Behaviour {
                 firstInfoSend.setContent(namesList.toString() + "*0" + "*" + spentMoney + "*" + splittedOne[4]);
                 firstInfoSend.addReceiver(new AID(namesList.get(namesList.size() - 2), false));
                 getAgent().send(firstInfoSend);
-            } else {block();}
+            }
         }
         else { block();
         }
@@ -53,6 +58,6 @@ public class BehaviourForLastAgent extends Behaviour {
 
     @Override
     public boolean done() {
-        return false;
+        return System.currentTimeMillis() == currenttime + 4000;
     }
 }

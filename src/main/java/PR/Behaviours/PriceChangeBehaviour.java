@@ -12,7 +12,7 @@ public class PriceChangeBehaviour extends TickerBehaviour {
 
     @Override
     protected void onTick() {
-        this.getAgent().addBehaviour(new WakerBehaviour(this.getAgent(), 3000) {
+        this.getAgent().addBehaviour(new WakerBehaviour(this.getAgent(), 4000) {
             @Override
             protected void onWake() {
                 PriceData.setPriceElectricity(PriceData.getPriceElectricity() + 1);

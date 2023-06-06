@@ -27,7 +27,7 @@ public class FSMBehForStarter extends FSMBehaviour {
     @Override
     public int onEnd() {
         if (PriceData.getPriceElectricity() < 20) {
-            this.getAgent().addBehaviour(new WakerBehaviour(this.getAgent(), 1000) {
+            this.getAgent().addBehaviour(new WakerBehaviour(this.getAgent(), 5000) {
                 @Override
                 protected void onWake() {
                     this.getAgent().addBehaviour(new FSMBehForStarter(this.getAgent()));

@@ -58,7 +58,6 @@ public class GettingMessagesForStarter extends Behaviour {
                         sendersNameInMyNeighboursList = i;
                     }
                 }
-
                 double newSumWeight = sumWeight + weightsForNeighbours.get(sendersNameInMyNeighboursList);
                 FinalCalc finalCalc = new FinalCalc();
                 finalCalc.setWay(inform.getContent());
@@ -69,14 +68,9 @@ public class GettingMessagesForStarter extends Behaviour {
                 newFinalCalcList.add(finalCalc);
                 agentData.setFinalCalcList(newFinalCalcList);
 
-            } else { block(); }
+            }
         } else { block(); }
 
-        MessageTemplate request = MessageTemplate.MatchPerformative(ACLMessage.REQUEST);
-        ACLMessage commonReq = getAgent().receive(request);
-        if (commonReq != null) {
-            block();
-        } else { block(); }
     }
 
     @Override

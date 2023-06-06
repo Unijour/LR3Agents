@@ -11,7 +11,7 @@ public class ParallelBehForStarter extends ParallelBehaviour {
 
     public ParallelBehForStarter(Agent a, AgentData agentData, long wakeUpTime) {
         super(a, WHEN_ANY);
-        receiver = new GettingMessagesForStarter(getAgent(), agentData);
+        receiver = new ParallelBehForGettingStarter(getAgent(), agentData);
         waker = new WakerBehaviour(getAgent(), wakeUpTime) {
             @Override
             protected void onWake() {
