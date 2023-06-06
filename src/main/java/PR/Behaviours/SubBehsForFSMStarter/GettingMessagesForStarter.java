@@ -11,6 +11,8 @@ import jade.lang.acl.MessageTemplate;
 
 import java.util.ArrayList;
 
+
+
 public class GettingMessagesForStarter extends Behaviour {
 
     AgentData agentData;
@@ -61,11 +63,19 @@ public class GettingMessagesForStarter extends Behaviour {
                 FinalCalc finalCalc = new FinalCalc();
                 finalCalc.setWay(inform.getContent());
                 finalCalc.setFinalWeight(newSumWeight);
+                finalCalc.setType(splitedInform[3]);
+                finalCalc.setFinalPrice(Double.parseDouble(splitedInform[2]));
                 ArrayList<FinalCalc> newFinalCalcList = agentData.getFinalCalcList();
                 newFinalCalcList.add(finalCalc);
                 agentData.setFinalCalcList(newFinalCalcList);
 
-            }
+            } else { block(); }
+        } else { block(); }
+
+        MessageTemplate request = MessageTemplate.MatchPerformative(ACLMessage.REQUEST);
+        ACLMessage commonReq = getAgent().receive(request);
+        if (commonReq != null) {
+            block();
         } else { block(); }
     }
 

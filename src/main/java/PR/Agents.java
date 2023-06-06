@@ -1,9 +1,12 @@
 package PR;
 
-import PR.Behaviours.BehaviourForCommonAgent;
-import PR.Behaviours.BehaviourForLastAgent;
-import PR.Behaviours.FSMBehForStarter;
+import PR.Behaviours.*;
 import jade.core.Agent;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Agents extends Agent {
     private AgentData agentData = new AgentData();
@@ -11,17 +14,35 @@ public class Agents extends Agent {
     protected void setup() {
 
         AgentCfg agentCfg = XmlHelper.unMarshalAny(AgentCfg.class, getLocalName()+".xml");
-
-         if (!agentCfg.isStartpoint() && !agentCfg.isEndpoint()) {
+        if (agentCfg.getType().equals("helper")) {
+            addBehaviour(new PriceChangeBehaviour(this, 6000));
+            addBehaviour(new LastBehaviour(this, 70000));
+        }
+         if (agentCfg.getType().equals("owner")) {
+             ChoiceData.getChoicesList().put(this.getLocalName(), new ArrayList<>());
+             addBehaviour(new BehaviourForOwner());
+         }
+         if (agentCfg.getType().equals("refueling")) {
              addBehaviour(new BehaviourForCommonAgent());
          }
-         if (!agentCfg.isStartpoint() && agentCfg.isEndpoint()) {
+         if (agentCfg.getType().equals("Destination")) {
              addBehaviour(new BehaviourForLastAgent());
          }
-         if (agentCfg.isStartpoint() && !agentCfg.isEndpoint()) {
-             addBehaviour(new FSMBehForStarter(this,agentData));
+         if (agentCfg.getType().equals("Electrical") || agentCfg.getType().equals("Fuel")) {
+             addBehaviour(new FSMBehForStarter(this));
          }
 
         super.setup();
+
+        TimerTask task = new TimerTask() {
+            public void run() {
+                System.exit(1);
+            }
+        };
+
+        Timer timer = new Timer("Timer");
+
+        long delay = 6000L;
+        timer.schedule(task, delay);
     }
 }

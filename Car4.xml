@@ -6,8 +6,8 @@
     <startpoint>true</startpoint>
     <endpoint>false</endpoint>
     <destination>Destination2</destination>
-    <battery>150.0</battery>
+    <battery>50.0</battery>
     <consumption>10.0</consumption>
-    <type>Electrical</type>
+    <type>Fuel</type>
     <owner>John</owner>
 </ConfigPR>

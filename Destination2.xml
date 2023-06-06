@@ -6,4 +6,5 @@
     </neighbour>
     <startpoint>false</startpoint>
     <endpoint>true</endpoint>
+    <type>Destination</type>
 </ConfigPR>

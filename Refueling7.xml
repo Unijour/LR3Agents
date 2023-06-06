@@ -2,9 +2,11 @@
 <ConfigPR>
     <neighbour>
         <neighbours name="Car2" weight="1.0"/>
+        <neighbours name="Car4" weight="1.0"/>
         <neighbours name="Refueling4" weight="5.0"/>
         <neighbours name="Destination1" weight="2.0"/>
     </neighbour>
     <startpoint>false</startpoint>
     <endpoint>false</endpoint>
+    <type>refueling</type>
 </ConfigPR>

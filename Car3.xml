@@ -9,6 +9,6 @@
     <destination>Destination1</destination>
     <battery>24.0</battery>
     <consumption>1.0</consumption>
-    <type>Electrical</type>
+    <type>Fuel</type>
     <owner>Steve</owner>
 </ConfigPR>

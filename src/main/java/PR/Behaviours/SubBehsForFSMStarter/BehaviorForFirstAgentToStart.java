@@ -21,7 +21,7 @@ public class BehaviorForFirstAgentToStart extends OneShotBehaviour {
         ArrayList<String> namesList = new ArrayList<>();
         namesList.add(getAgent().getLocalName());
         ACLMessage commonSend = new ACLMessage(ACLMessage.REQUEST);
-        commonSend.setContent(namesList.toString()+"!i am first"+"!"+cfg.getBattery());
+        commonSend.setContent(namesList.toString()+"!i am first"+"!"+cfg.getBattery()+ "!" +cfg.getConsumption() + "!" + cfg.getType());
         for (int i=0; i<namesForNeighbours.size(); i++) {
             commonSend.addReceiver(new AID(namesForNeighbours.get(i), false));
         }

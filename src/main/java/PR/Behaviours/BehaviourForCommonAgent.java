@@ -1,6 +1,7 @@
 package PR.Behaviours;
 
 import PR.AgentCfg;
+import PR.PriceData;
 import PR.XmlHelper;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
@@ -34,14 +35,21 @@ public class BehaviourForCommonAgent extends Behaviour {
                         numberOfSender = i;
                     }
                 }
-                if (Double.parseDouble(commonReq.getContent().split("!")[2]) >= cfg.getNeighbours().get(numberOfSender).getWeight() * 5) {
-                    String commonFirstReq = commonReq.getContent().split("!")[0].replace("[", "");
+                String[] splittedOne = commonReq.getContent().split("!");
+                if (Double.parseDouble(splittedOne[2]) - cfg.getNeighbours().get(numberOfSender).getWeight() * Double.parseDouble(splittedOne[3]) >= 0) {
+                    String commonFirstReq = splittedOne[0].replace("[", "");
                     commonFirstReq = commonFirstReq.replace("]", "");
                     ArrayList<String> namesList = new ArrayList<>();
                     namesList.add(commonFirstReq);
                     namesList.add(getAgent().getLocalName());
                     ACLMessage commonSend = new ACLMessage(ACLMessage.REQUEST);
-                    commonSend.setContent(namesList.toString()+"!" + commonReq.getContent().split("!")[2]);
+                    double spentMoney = 0.0;
+                    if (splittedOne[4].equals("Electrical")) {
+                        spentMoney = cfg.getNeighbours().get(numberOfSender).getWeight() * Double.parseDouble(splittedOne[3]) * PriceData.getPriceElectricity();
+                    } else if (splittedOne[4].equals("Fuel")) {
+                        spentMoney = cfg.getNeighbours().get(numberOfSender).getWeight() * Double.parseDouble(splittedOne[3]) * PriceData.getPriceFuel();
+                    }
+                    commonSend.setContent(namesList.toString()+"!" + splittedOne[2] + "!" + splittedOne[3] + "!" + spentMoney + "!" + splittedOne[4]);
                     List<String> namesToSend;
                     namesToSend = namesForNeighbours;
                     try {
@@ -75,7 +83,8 @@ public class BehaviourForCommonAgent extends Behaviour {
                         numberOfSender = i;
                     }
                 }
-                if (Double.parseDouble(commonReq.getContent().split("!")[1]) >= cfg.getNeighbours().get(numberOfSender).getWeight() * 5) {
+                String[] splittedOne = commonReq.getContent().split("!");
+                if (Double.parseDouble(splittedOne[1]) - cfg.getNeighbours().get(numberOfSender).getWeight() * Double.parseDouble(splittedOne[2]) >= 0) {
                     String commonReqTosplit = commonReq.getContent().split("!")[0].replace("[", "");
                     commonReqTosplit = commonReqTosplit.replace("]", "");
                     String[] splitedReq = commonReqTosplit.split("\\,\\ ");
@@ -85,7 +94,13 @@ public class BehaviourForCommonAgent extends Behaviour {
                     }
                     namesList.add(getAgent().getLocalName());
                     ACLMessage commonSend = new ACLMessage(ACLMessage.REQUEST);
-                    commonSend.setContent(namesList.toString() + "!" + commonReq.getContent().split("!")[1]);
+                    double spentMoney = 0.0;
+                    if (splittedOne[4].equals("Electrical")) {
+                        spentMoney = Double.parseDouble(splittedOne[3]) + cfg.getNeighbours().get(numberOfSender).getWeight() * Double.parseDouble(splittedOne[2]) * PriceData.getPriceElectricity();
+                    } else if (splittedOne[4].equals("Fuel")) {
+                        spentMoney = Double.parseDouble(splittedOne[3]) + cfg.getNeighbours().get(numberOfSender).getWeight() * Double.parseDouble(splittedOne[2]) * PriceData.getPriceFuel();
+                    }
+                    commonSend.setContent(namesList.toString() + "!" + splittedOne[1] + "!" + splittedOne[2] + "!" + spentMoney  + "!" + splittedOne[4]);
                     List<String> namesToSend;
                     namesToSend = namesForNeighbours;
                     try {
@@ -114,7 +129,7 @@ public class BehaviourForCommonAgent extends Behaviour {
                     } catch (IndexOutOfBoundsException e) {
                         block();
                     }
-                }
+                } {block();}
             }
         } else {block();}
 
@@ -152,7 +167,7 @@ public class BehaviourForCommonAgent extends Behaviour {
             double newSumWeight = sumWeight + weightsForNeighbours.get(sendersNameInMyNeighboursList);
 
             ACLMessage InfoSend = new ACLMessage(ACLMessage.INFORM);
-            InfoSend.setContent(infoNamesList.toString()+"*"+newSumWeight);
+            InfoSend.setContent(infoNamesList.toString()+"*"+newSumWeight + "*" + splitedInform[2] + "*" + splitedInform[3]);
             InfoSend.addReceiver(new AID(infoNamesList.get(myPlaceInThisList-2), false));
             getAgent().send(InfoSend);
 

@@ -6,4 +6,5 @@
     </neighbour>
     <startpoint>false</startpoint>
     <endpoint>false</endpoint>
+    <type>refueling</type>
 </ConfigPR>
